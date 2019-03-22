@@ -3,8 +3,13 @@ Lambda to send logs from Cloudwatch to Papertrail
 
 ## Usage
 
-First, ensure an IAM role exists called `lambda_basic_execution`,
-with the `AWSLambdaBasicExecutionRole` policy.
+First, ensure an IAM role exists with the `AWSLambdaBasicExecutionRole` policy.
+This is generally called  `lambda_basic_execution`.
+If the role has a different name, configure it.
+
+```bash
+$ export LAMBDA_EXECUTION_ROLE=ECS-APP-Role
+```
 
 Then create lambda function and streams logs from the specified log group to this function:
 

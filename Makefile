@@ -5,6 +5,7 @@ HOST ?= logs.papertrailapp.com
 PORT ?= 1234
 DATADOG ?=
 WAIT_FOR_FLUSH ?= false
+LAMBDA_EXECUTION_ROLE ?= lambda_basic_execution
 
 ALNUM_LOG_GROUP = $(shell echo $(LOG_GROUP) | sed 's/[^[:alnum:]]/_/g')
 ACCOUNT_ID = $(shell aws sts get-caller-identity --output text --query Account)
@@ -29,7 +30,7 @@ lambda: deps env create-zip
 	--runtime nodejs8.10 \
 	--handler index.handler \
 	--zip-file fileb://code.zip \
-	--role arn:aws:iam::$(ACCOUNT_ID):role/lambda_basic_execution
+	--role arn:aws:iam::$(ACCOUNT_ID):role/$(LAMBDA_EXECUTION_ROLE)
 
 deploy: deps env create-zip
 	aws lambda update-function-code --publish \
